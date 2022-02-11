@@ -1,0 +1,9 @@
+.link {
+	text-decoration: none;
+	color: $dark-grey;
+	cursor: pointer;
+	&:hover {
+		color: darken($color: $primary, $amount: 20);
+		text-decoration: underline;
+	}
+}
