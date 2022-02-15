@@ -1,19 +1,32 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {Link} from "react-router-dom";
-import {login, startGoogleLogin} from "../../actions/auth";
+import validator from 'validator';
+
+import {startGoogleLogin, startLoginWithEmailAndPassword} from "../../actions/auth";
 import useForm from "../../hooks/useForm";
 
 const LoginScreen = () => {
 
 	const dispatch = useDispatch();
+	const {loading} = useSelector(state => state.ui);
+
 	const [{email, password}, handleInputChange, resetForm ] = useForm({
 		email: '',
 		password: '',
 	});
 
+	const isValidForm = () => {
+		if(validator.isEmail(email) === false) {
+			return false;
+		} 
+		return true;
+	}
 	const handleLogin = (e) => {
 		e.preventDefault();
-		dispatch(login('asdfasd12', 'Francisco'));
+		if(isValidForm() === false) {
+			return;
+		}
+		dispatch(startLoginWithEmailAndPassword(email, password));
 	};
 
 	const handleGoogleLoginClick = () => {
@@ -47,7 +60,7 @@ const LoginScreen = () => {
 					/>
 				</div>
 				<div className="auth__field">
-					<input type="submit" value="Login" className="btn btn-primary btn-block" />
+					<input disabled={loading} type="submit" value="Login" className="btn btn-primary btn-block" />
 				</div>
 				<div className="auth__social-network">
 					<span className="auth__span">Login With Social Network</span>

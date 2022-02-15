@@ -4,7 +4,9 @@ import RegisterScreen from '../components/auth/RegisterScreen';
 import LoginScreen from '../components/auth/LoginScreen';
 
 const AuthRouter = () => {
+
 	const {path} = useRouteMatch();
+
 	return (
 		<div className="auth__main">
 			<div className="auth__box-container">
