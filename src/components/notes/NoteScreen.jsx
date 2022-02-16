@@ -1,6 +1,12 @@
+import {useSelector} from "react-redux";
+import useForm from "../../hooks/useForm";
 import NotesAppBar from "./NotesAppBar";
 
 const NoteScreen = () => {
+
+	const {activeNote} = useSelector(state => state.notes);
+	const [{title, body, urlImage}, handleInputChange, reset] = useForm(activeNote);
+
 	return (
 		<div className="notes__main-content">
 			<NotesAppBar />
@@ -10,17 +16,25 @@ const NoteScreen = () => {
 					type="text"
 					placeholder="Some awesome title..."
 					autoComplete="off"
+					name="title"
+					value={title}
+					onChange={handleInputChange}
 				/>
 				<textarea
 					placeholder="What happened today?"
 					className="notes__textarea"
+					name="body"
+					value={body}
+					onChange={handleInputChange}
 				></textarea>
-				<div className="notes__image">
-					<img
-						src="https://media.istockphoto.com/photos/mountain-landscape-ponta-delgada-island-azores-picture-id944812540?k=20&m=944812540&s=612x612&w=0&h=U3sC5L6ZJY2oHC33eixu4CcB15JsgKl0Wnhtcpf_p40="
-						alt="decoration image | image about life"
-					/>
-				</div>
+				{urlImage !== undefined && (
+					<div className="notes__image">
+						<img
+							src="https://media.istockphoto.com/photos/mountain-landscape-ponta-delgada-island-azores-picture-id944812540?k=20&m=944812540&s=612x612&w=0&h=U3sC5L6ZJY2oHC33eixu4CcB15JsgKl0Wnhtcpf_p40="
+							alt="decoration image | image about life"
+						/>
+					</div>
+				)}
 			</div>
 		</div>
 	);

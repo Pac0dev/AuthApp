@@ -2,6 +2,8 @@
 import {useEffect, useState} from "react"
 import firebase from 'firebase/app';
 import {Route, BrowserRouter as Router, Switch, Redirect} from "react-router-dom"
+import 'sweetalert2/src/sweetalert2.scss'
+
 
 import JournalScreen from "../components/journal/JournalScreen"
 import AuthRouter from "./AuthRouter"
@@ -9,6 +11,7 @@ import {useDispatch} from "react-redux";
 import {login} from "../actions/auth";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
+import {startLoadingNotes} from "../actions/notes";
 
 const AppRouter = () => {
 
@@ -22,6 +25,8 @@ const AppRouter = () => {
 			if(user?.uid) {
 				dispatch(login(user.uid, user.displayName));
 				setIsLoggedIn(true);
+
+				dispatch(startLoadingNotes());
 			} else {
 				setIsLoggedIn(false);
 			}
