@@ -14,7 +14,7 @@ const useForm = (initialState = {}) => {
 		});
 	};
 
-	const resetForm = () => setFormValues({initialState});
+	const resetForm = (resetObj = initialState) => setFormValues(resetObj);
 
 	return [formValues, handleInputChange, resetForm];
 }

@@ -3,6 +3,7 @@ import {useDispatch} from 'react-redux';
 import {activeNote} from '../../actions/notes.js';
 
 import getFormatedDate from '../../helpers/getFormatedDate.js';
+
 const JournalEntry = ({
 	id, 
 	date,
@@ -20,7 +21,7 @@ const JournalEntry = ({
 	}
 
 	return (
-		<div className="journal__entry" onClick={handleNoteClick}>
+		<div className="journal__entry pointer" onClick={handleNoteClick}>
 			{
 				imageUrl !== undefined && (<div
 					className="journal__entry-picture"

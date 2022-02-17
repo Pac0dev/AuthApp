@@ -1,4 +1,5 @@
-import {types} from "../types/types";
+import refreshNotes from "../helpers/refreshNotes";
+import { types } from "../types/types";
 
 const initialState = {
 	notes: [],
@@ -6,19 +7,38 @@ const initialState = {
 };
 
 export const notesReducer = (state = initialState, action = {}) => {
-	switch(action.type) {
-		case types.notesActive: 
+	switch (action.type) {
+		case types.notesAddNew: 
+			return {
+				...state,
+				notes: [action.payload, ...state.notes],
+			};
+		case types.notesActive:
 			return {
 				...state,
 				activeNote: {
 					...action.payload,
 				},
 			};
-		case types.notesLoad: 
+		case types.notesLoad:
 			return {
-				...state, 
-				notes: action.payload,
+				...state,
+				notes: [...action.payload],
 			};
-		default: return state;
+		case types.notesUpdated:
+			return {
+				...state,
+				notes: [...refreshNotes(state.notes, action.payload.note)], 
+			};
+		case types.notesFileUrl: 
+			return {
+				...state,
+				activeNote: {
+					...state.activeNote,
+					imageUrl: action.payload
+				}
+			};
+		default:
+			return state;
 	}
-}
+};
